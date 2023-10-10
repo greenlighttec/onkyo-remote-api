@@ -24,3 +24,29 @@ async function scanReceivers() {
     manualOption.text = "Specify IP Manually";
     select.appendChild(manualOption);
 }
+
+function toggleManualIP() {
+    const manualIP = document.getElementById("manualIP");
+    if (manualIP.style.display === "none") {
+        manualIP.style.display = "block";
+    } else {
+        manualIP.style.display = "none";
+    }
+}
+
+async function saveSettings() {
+    const selectedIP = document.getElementById("receiverList").value;
+    const manualIP = document.getElementById("manualIP").value;
+    const response = await fetch('/api/save_settings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ selectedIP, manualIP })
+    });
+    const data = await response.json();
+    console.log(data);
+}
+
+
+
