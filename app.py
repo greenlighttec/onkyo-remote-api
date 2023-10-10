@@ -1,9 +1,13 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import eiscp
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 receivers = {}
+
+@app.route('/')
+def index():
+    return send_from_directory('static', 'index.html')
 
 @app.route('/api/scan', methods=['GET'])
 def scan_receivers():
