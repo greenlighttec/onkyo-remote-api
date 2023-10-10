@@ -34,10 +34,25 @@ function closeManualIPBox() {
 
 async function saveManualIP() {
     const manualIP = document.getElementById("lightboxManualIP").value;
-    // Save to server and add to dropdown
-    // ... API call to save manual IP ...
+    const response = await fetch('/api/save_manual_ip', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ manual_ip: manualIP })
+    });
+    const data = await response.json();
+    if (data.status === "Manual IP saved") {
+        // Add the manual IP to the dropdown
+        const dropdown = document.getElementById("receiverList");
+        const option = document.createElement("option");
+        option.text = manualIP;
+        option.value = manualIP;
+        dropdown.add(option);
+    }
     closeManualIPBox();
 }
+
 
 function connectReceiver() {
     const selectedIP = document.getElementById("receiverList").value;
