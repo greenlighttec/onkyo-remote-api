@@ -12,6 +12,9 @@
         <select id="receiverList">
             <option value="">--Select Receiver--</option>
         </select>
+        <input type="text" id="manualIP" placeholder="Manual IP" style="display:none;">
+        <button onclick="toggleManualIP()" id="toggleIPButton">Enter IP Manually</button>
+        <button onclick="saveSettings()">Save</button>
         <button onclick="sendCommand('power=on')">Power On</button>
         <button onclick="sendCommand('power=off')">Power Off</button>
     </div>
