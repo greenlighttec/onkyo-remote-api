@@ -45,6 +45,7 @@ async function saveSettings() {
         body: JSON.stringify({ selectedIP, manualIP })
     });
     const data = await response.json();
+    document.getElementById("remoteContainer").style.display = "flex";
     console.log(data);
 }
 
