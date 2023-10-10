@@ -42,11 +42,14 @@ def connect_receiver():
     try:
         if session_id not in receivers:
             receiver = eiscp.eISCP(ip)
-            receivers[session_id] = receiver
-
-        resp = make_response(jsonify({"status": "Connected"}))
-        resp.set_cookie('session_id', session_id)
-        return resp
+            status = receiver.get()
+            if status != None:
+                receivers[session_id] = receiver
+                resp = make_response(jsonify({"status": "Connected"}))
+                resp.set_cookie('session_id', session_id)
+                return resp
+            else:
+                return jsonify({"status": f"Failed to connect: {str(e)}"}), 502
     except Exception as e:
         return jsonify({"status": f"Failed to connect: {str(e)}"}), 500
 
