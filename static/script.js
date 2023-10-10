@@ -24,14 +24,26 @@ async function scanReceivers() {
     manualOption.text = "Specify IP Manually";
     select.appendChild(manualOption);
 }
-
 function toggleManualIP() {
-    const manualIP = document.getElementById("manualIP");
-    if (manualIP.style.display === "none") {
-        manualIP.style.display = "block";
-    } else {
-        manualIP.style.display = "none";
-    }
+    document.getElementById("manualIPBox").style.display = "block";
+}
+
+function closeManualIPBox() {
+    document.getElementById("manualIPBox").style.display = "none";
+}
+
+async function saveManualIP() {
+    const manualIP = document.getElementById("lightboxManualIP").value;
+    // Save to server and add to dropdown
+    // ... API call to save manual IP ...
+    closeManualIPBox();
+}
+
+function connectReceiver() {
+    const selectedIP = document.getElementById("receiverList").value;
+    // Connect to receiver and show remote
+    // ... API call to connect ...
+    document.getElementById("remoteContainer").style.display = "flex";
 }
 
 async function saveSettings() {
