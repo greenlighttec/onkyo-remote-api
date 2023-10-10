@@ -15,8 +15,22 @@
         <input type="text" id="manualIP" placeholder="Manual IP" style="display:none;">
         <button onclick="toggleManualIP()" id="toggleIPButton">Enter IP Manually</button>
         <button onclick="saveSettings()">Save</button>
-        <button onclick="sendCommand('power=on')">Power On</button>
-        <button onclick="sendCommand('power=off')">Power Off</button>
+        
+        <!-- Remote Control Interface -->
+        <div class="remote-control">
+            <button class="remote-button" id="powerOn">Power On</button>
+            <button class="remote-button" id="powerOff">Power Off</button>
+            <button class="remote-button" id="volumeUp">Vol +</button>
+            <button class="remote-button" id="volumeDown">Vol -</button>
+            <button class="remote-button" id="mute">Mute</button>
+            <select class="remote-button" id="inputSelector">
+                <option value="">--Select Input--</option>
+                <!-- Add input options here -->
+            </select>
+            <div class="osd-display" id="osdDisplay">
+                <!-- OSD information will appear here -->
+            </div>
+        </div>
     </div>
 </body>
 </html>
