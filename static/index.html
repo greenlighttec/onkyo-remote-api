@@ -8,6 +8,7 @@
 <body>
     <div class="container">
         <h1>Onkyo Remote</h1>
+    <div id="connectionOptions">
         <button onclick="scanReceivers()">Scan for Receivers</button>
         <select id="receiverList">
             <option value="">--Select Receiver--</option>
@@ -15,7 +16,7 @@
         <input type="text" id="manualIP" placeholder="Manual IP" style="display:none;">
         <button onclick="toggleManualIP()" id="toggleIPButton">Enter IP Manually</button>
         <button onclick="connectReceiver()" id="connectButton">Connect</button>
-
+    </div>
     <div id="manualIPBox" class="lightbox">
         <div class="lightbox-content">
             <span class="close" onclick="closeManualIPBox()">&times;</span>
