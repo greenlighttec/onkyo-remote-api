@@ -1,5 +1,16 @@
 from flask import Flask, request, jsonify, send_from_directory
-import eiscp
+import eiscp, json
+
+def load_settings():
+    try:
+        with open('settings.json', 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
+
+def save_settings(settings):
+    with open('settings.json', 'w') as f:
+        json.dump(settings, f)
 
 app = Flask(__name__, static_folder='static')
 
