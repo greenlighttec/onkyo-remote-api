@@ -25,7 +25,11 @@ def index():
 def scan_receivers():
     global receivers
     receivers = {device_info['host']: device_info for device_info in eiscp.eISCP.discover()}
-    return jsonify(list(receivers.keys()))
+    settings = load_settings()
+    manual_ips = settings.get('manual_ips', [])
+    detected_ips = list(receivers.keys())
+    all_ips = list(set(detected_ips + manual_ips))
+    return jsonify(all_ips)
 
 @app.route('/api/command', methods=['POST'])
 def send_command():
