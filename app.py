@@ -12,7 +12,7 @@ def index():
 @app.route('/api/scan', methods=['GET'])
 def scan_receivers():
     global receivers
-    receivers = {device_info['host']: device_info for device_info in eiscp.discover()}
+    receivers = {device_info['host']: device_info for device_info in eiscp.eISCP.discover()}
     return jsonify(list(receivers.keys()))
 
 @app.route('/api/command', methods=['POST'])
