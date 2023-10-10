@@ -20,8 +20,6 @@ async function scanReceivers() {
     }
     
     const manualOption = document.createElement('option');
-    manualOption.value = "manual";
-    manualOption.text = "Specify IP Manually";
     select.appendChild(manualOption);
 }
 function toggleManualIP() {
