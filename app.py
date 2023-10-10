@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, send_from_directory
-import eiscp, json
+import eiscp, json, uuid
 
 def load_settings():
     try:
@@ -30,6 +30,26 @@ def scan_receivers():
     detected_ips = list(receivers.keys())
     all_ips = list(set(detected_ips + manual_ips))
     return jsonify(all_ips)
+
+@app.route('/api/connect', methods=['POST'])
+def connect_receiver():
+    ip = request.json.get('ip')
+    session_id = request.cookies.get('session_id')
+    
+    if session_id is None:
+        session_id = str(uuid.uuid4())
+    
+    try:
+        if session_id not in receivers:
+            receiver = eiscp.eISCP(ip)
+            receivers[session_id] = receiver
+
+        resp = make_response(jsonify({"status": "Connected"}))
+        resp.set_cookie('session_id', session_id)
+        return resp
+    except Exception as e:
+        return jsonify({"status": f"Failed to connect: {str(e)}"}), 500
+
 
 @app.route('/api/command', methods=['POST'])
 def send_command():
