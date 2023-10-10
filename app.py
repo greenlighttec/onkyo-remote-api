@@ -43,6 +43,14 @@ def save_settings_endpoint():
     save_settings(settings)
     return jsonify({"status": "Settings saved"})
 
+@app.route('/api/save_manual_ip', methods=['POST'])
+def save_manual_ip():
+    manual_ip = request.json.get('manual_ip')
+    # Save manual IP to server
+    # ... code to save IP ...
+    return jsonify({"status": "Manual IP saved"})
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
