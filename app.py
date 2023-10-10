@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, make_response, send_from_directory
 import eiscp, json, uuid
 
 def load_settings():
