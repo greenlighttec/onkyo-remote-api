@@ -14,8 +14,15 @@
         </select>
         <input type="text" id="manualIP" placeholder="Manual IP" style="display:none;">
         <button onclick="toggleManualIP()" id="toggleIPButton">Enter IP Manually</button>
-        <button onclick="saveSettings()">Save</button>
-        
+        <button onclick="connectReceiver()" id="connectButton">Connect</button>
+
+    <div id="manualIPBox" class="lightbox">
+        <div class="lightbox-content">
+            <span class="close" onclick="closeManualIPBox()">&times;</span>
+            <input type="text" id="lightboxManualIP" placeholder="Enter IP">
+            <button onclick="saveManualIP()">Save</button>
+        </div>
+    </div>
         <div id="remoteContainer" style="display:none;">
             <div class="remote-control">
                 <button class="remote-button" id="powerOn">Power On</button>
