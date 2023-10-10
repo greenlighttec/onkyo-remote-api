@@ -2,13 +2,18 @@
 <html>
 <head>
     <title>Onkyo Remote</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="script.js"></script>
 </head>
 <body>
-    <h1>Onkyo Remote</h1>
-    <button onclick="scanReceivers()">Scan for Receivers</button>
-    <select id="receiverList"></select>
-    <button onclick="sendCommand('power=on')">Power On</button>
-    <button onclick="sendCommand('power=off')">Power Off</button>
+    <div class="container">
+        <h1>Onkyo Remote</h1>
+        <button onclick="scanReceivers()">Scan for Receivers</button>
+        <select id="receiverList">
+            <option value="">--Select Receiver--</option>
+        </select>
+        <button onclick="sendCommand('power=on')">Power On</button>
+        <button onclick="sendCommand('power=off')">Power Off</button>
+    </div>
 </body>
 </html>
