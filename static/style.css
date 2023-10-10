@@ -26,3 +26,36 @@ select {
     margin: 5px;
     padding: 10px;
 }
+.remote-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.remote-button {
+    margin: 10px;
+    padding: 15px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+}
+
+.remote-button:hover {
+    background-color: #0056b3;
+}
+
+.osd-display {
+    margin-top: 20px;
+    width: 100%;
+    height: 100px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
