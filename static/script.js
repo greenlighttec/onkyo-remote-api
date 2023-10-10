@@ -52,11 +52,24 @@ async function saveManualIP() {
 }
 
 
-function connectReceiver() {
+async function connectReceiver() {
     const selectedIP = document.getElementById("receiverList").value;
-    // Connect to receiver and show remote
-    // ... API call to connect ...
-    document.getElementById("remoteContainer").style.display = "flex";
+    const response = await fetch('/api/connect', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ ip: selectedIP })
+    });
+    const data = await response.json();
+    if (data.status === "Connected") {
+        // Hide connection options and show remote
+        document.getElementById("connectionOptions").style.display = "none";
+        document.getElementById("remoteContainer").style.display = "flex";
+    } else {
+        // Handle connection failure (you can add more user-friendly behavior here)
+        alert("Failed to connect to receiver.");
+    }
 }
 
 async function saveSettings() {
