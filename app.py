@@ -6,11 +6,12 @@ def load_settings():
         with open('settings.json', 'r') as f:
             return json.load(f)
     except FileNotFoundError:
-        return {}
+        return {'manual_ips': []}
 
 def save_settings(settings):
     with open('settings.json', 'w') as f:
         json.dump(settings, f)
+
 
 app = Flask(__name__, static_folder='static')
 
@@ -44,12 +45,14 @@ def save_settings_endpoint():
     return jsonify({"status": "Settings saved"})
 
 @app.route('/api/save_manual_ip', methods=['POST'])
-def save_manual_ip():
+def save_manual_ip_route():
     manual_ip = request.json.get('manual_ip')
-    # Save manual IP to server
-    # ... code to save IP ...
+    settings = load_settings()
+    if 'manual_ips' not in settings:
+        settings['manual_ips'] = []
+    settings['manual_ips'].append(manual_ip)
+    save_settings(settings)
     return jsonify({"status": "Manual IP saved"})
-
 
 
 if __name__ == '__main__':
