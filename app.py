@@ -37,5 +37,12 @@ def send_command():
     else:
         return jsonify({"status": "Receiver not found"}), 404
 
+@app.route('/api/save_settings', methods=['POST'])
+def save_settings_endpoint():
+    settings = request.json
+    save_settings(settings)
+    return jsonify({"status": "Settings saved"})
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
