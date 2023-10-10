@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Install Flask
-RUN pip install Flask
+RUN pip install Flask onkyo-eiscp
 
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
