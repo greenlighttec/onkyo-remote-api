@@ -30,6 +30,10 @@ function closeManualIPBox() {
     document.getElementById("manualIPBox").style.display = "none";
 }
 
+function updateOSDVolume(newVolume) {
+    document.getElementById("osdVolume").innerText = `Volume: ${newVolume}`;
+}
+
 async function saveManualIP() {
     const manualIP = document.getElementById("lightboxManualIP").value;
     const response = await fetch('/api/save_manual_ip', {
@@ -66,6 +70,7 @@ async function connectReceiver() {
         // Hide connection options and show remote
         document.getElementById("connectionOptions").style.display = "none";
         document.getElementById("remoteContainer").style.display = "flex";
+        updateOSDVolume(data.current_volume);
     } else {
         // Handle connection failure (you can add more user-friendly behavior here)
         alert("Failed to connect to receiver.");
