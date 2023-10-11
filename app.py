@@ -68,7 +68,7 @@ def set_volume():
             return jsonify({"status": "Failure", "message": "No volume specified"}), 400
 
         # Set the new volume
-        receiver.command('master-volume', arguments=[new_volume], zone='main')
+        receiver.command('master-volume', arguments=[str(new_volume)], zone='main')
         
         return jsonify({"status": "Success", "new_volume": new_volume})
     except Exception as e:
