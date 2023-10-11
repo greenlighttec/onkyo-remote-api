@@ -45,7 +45,8 @@ def connect_receiver():
             status = receiver.get()
             if status != None:
                 receivers[session_id] = receiver
-                resp = make_response(jsonify({"status": "Connected"}))
+                current_volume = receiver.command('master-volume', arguments=['query'], zone='main')[1]
+                resp = make_response(jsonify({"status": "Connected", "current_volume": current_volume}))
                 resp.set_cookie('session_id', session_id)
                 return resp
             else:
