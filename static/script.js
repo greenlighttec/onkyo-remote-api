@@ -27,7 +27,7 @@ async function scanReceivers() {
 
 function getCurrentVolumeFromOSD() {
     const osdText = document.getElementById("osdVolume").innerText;
-    return parseInt(osdText.replace('Volume: ', ''), 10);
+    return parseFloat(osdText.replace('Volume: ', ''), 10);
 }
 
 function apiToDb(apiVolume) {
