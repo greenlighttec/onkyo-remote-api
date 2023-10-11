@@ -131,7 +131,7 @@ async function adjustVolume(direction) {
     
     const data = await response.json();
     if (data.status === "Success") {
-        const dbVolume = apiToDb(newVolume);
+        const dbVolume = apiToDb(data.new_volume);
         updateOSDVolume(dbVolume);
     }
 }
