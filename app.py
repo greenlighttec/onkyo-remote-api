@@ -40,29 +40,6 @@ def connect_receiver():
         session_id = str(uuid.uuid4())
     
     try:
-        if session_id not in receivers:
-            receiver = eiscp.eISCP(ip)
-            status = receiver.get()
-            if status != None:
-                receivers[session_id] = receiver
-                current_volume = receiver.command('master-volume', arguments=['query'], zone='main')[1]
-                resp = make_response(jsonify({"status": "Connected", "current_volume": current_volume}))
-                resp.set_cookie('session_id', session_id)
-                return resp
-            else:
-                return jsonify({"status": f"Failed to connect: {str(e)}"}), 502
-    except Exception as e:
-        return jsonify({"status": f"Failed to connect: {str(e)}"}), 500
-
-@app.route('/api/connect', methods=['POST'])
-def connect_receiver():
-    ip = request.json.get('ip')
-    session_id = request.cookies.get('session_id')
-    
-    if session_id is None:
-        session_id = str(uuid.uuid4())
-    
-    try:
         receiver = eiscp.eISCP(ip)
         status = receiver.get()
         if status != None:
