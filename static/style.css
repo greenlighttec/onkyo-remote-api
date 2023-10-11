@@ -38,13 +38,31 @@ button:hover {
 }
 
 .osd-container {
-    flex: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 3px solid #007bff;
+    border: 2px solid #ccc;
     border-radius: 10px;
-    background-color: #f1f1f1;
+    padding: 20px;
+    margin: 20px;
+    background-color: #f9f9f9;
+}
+
+.osd-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.osd-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.osd-label {
+    font-weight: bold;
+}
+
+.osd-value {
+    font-weight: normal;
 }
 
 .osd-display {
