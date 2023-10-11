@@ -104,7 +104,7 @@ async function saveSettings() {
 
 async function adjustVolume(direction) {
     let currentVolume = getCurrentVolumeFromOSD();
-    let newVolume = direction === 'up' ? currentVolume + 0.5 : currentVolume - 0.5;
+    let newVolume = direction === 'up' ? currentVolume + 1 : currentVolume - 1;
     
     const response = await fetch('/api/set_volume', {
         method: 'POST',
