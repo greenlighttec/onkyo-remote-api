@@ -35,10 +35,29 @@
                     <option value="">--Select Input--</option>
                 </select>
             </div>
-            <div class="osd-container">
+            <div id="osdContainer" class="osd-container">
                 <div class="osd-display" id="osdDisplay">
-                    <div id="osdVolume">Volume: </div>
-                    <!-- OSD information will appear here -->
+                    <div class="osd-item">
+                        <span class="osd-label">Listening Mode:</span>
+                        <span id="osdListeningMode" class="osd-value"></span>
+                    </div>
+                    <div class="osd-item">
+                        <span class="osd-label">Audio Information:</span>
+                        <span id="osdAudioInfo" class="osd-value"></span>
+                    </div>
+                    <div class="osd-item">
+                        <span class="osd-label">Current State:</span>
+                        <span id="osdState" class="osd-value"></span>
+                    </div>
+                    <div class="osd-item">
+                        <span class="osd-label">Volume:</span>
+                        <span id="osdVolume" class="osd-value"></span>
+                    </div>
+                    <div class="osd-item">
+                        <span class="osd-label">Source:</span>
+                        <span id="osdSource" class="osd-value"></span>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
