@@ -17,6 +17,8 @@ async function scanReceivers() {
             option.text = ip;
             select.appendChild(option);
         });
+        select.value = data[0];
+
     }
     
     const manualOption = document.createElement('option');
@@ -58,6 +60,7 @@ async function saveManualIP() {
         option.text = manualIP;
         option.value = manualIP;
         dropdown.add(option);
+        dropdown.value = manualIP
     }
     closeManualIPBox();
 }
