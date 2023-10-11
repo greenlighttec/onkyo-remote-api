@@ -117,6 +117,21 @@ async function adjustVolume(direction) {
         updateOSDVolume(newVolume);
     }
 }
+async function togglePower(state) {
+    // let currentState = getCurrentStateFromOSD();
+    // let newState = direction === 'up' ? currentVolume + 0.5 : currentVolume - 0.5;
+    
+    const response = await fetch('/api/change_power', {
+        method: 'POST',
+        body: JSON.stringify({state: state}),
+        headers: {'Content-Type': 'application/json'}
+    });
+    
+    const data = await response.json();
+    if (data.status === "Success") {
+        //updateOSDVolume(newVolume);
+    }
+}
 
 
 
