@@ -50,7 +50,7 @@ def connect_receiver():
             audio_info = receiver.command('audio-information', arguments=['query'], zone='main')[1]
             video_info = receiver.command('video-information', arguments=['query'], zone='main')[1]
             # listening_mode = receiver.command('listening_mode', arguments=['query'], zone='main')[1]
-            resp = make_response(jsonify({"status": "Connected","listening_mode": listening_mode, "audio_information": audio_info, "current_state": current_state,"current_volume": current_volume, "current_src": current_src}))
+            resp = make_response(jsonify({"status": "Connected", "audio_information": audio_info, "current_state": current_state,"current_volume": current_volume, "current_src": current_src}))
             resp.set_cookie('session_id', session_id)
             return resp
         else:
