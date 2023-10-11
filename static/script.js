@@ -30,6 +30,21 @@ function getCurrentVolumeFromOSD() {
     return parseInt(osdText.replace('Volume: ', ''), 10);
 }
 
+function apiToDb(apiVolume) {
+    const referenceApiVolume = 94;
+    const referenceDb = -35.0;
+    const dbStep = 0.5;
+
+    return referenceDb + (apiVolume - referenceApiVolume) * dbStep;
+}
+
+function dbToApi(dbVolume) {
+    const referenceApiVolume = 94;
+    const referenceDb = -35.0;
+    const dbStep = 0.5;
+
+    return Math.round(referenceApiVolume + (dbVolume - referenceDb) / dbStep);
+}
 
 function toggleManualIP() {
     document.getElementById("manualIPBox").style.display = "block";
@@ -80,7 +95,8 @@ async function connectReceiver() {
         // Hide connection options and show remote
         document.getElementById("connectionOptions").style.display = "none";
         document.getElementById("remoteContainer").style.display = "flex";
-        updateOSDVolume(data.current_volume);
+        const dbVolume = apiToDb(data.current_volume);
+        updateOSDVolume(dbVolume);
     } else {
         // Handle connection failure (you can add more user-friendly behavior here)
         alert("Failed to connect to receiver.");
@@ -103,18 +119,20 @@ async function saveSettings() {
 }
 
 async function adjustVolume(direction) {
-    let currentVolume = getCurrentVolumeFromOSD();
-    let newVolume = direction === 'up' ? currentVolume + 0.5 : currentVolume - 0.5;
+    let currentDbVolume = getCurrentVolumeFromOSD();
+    let newDbVolume = direction === 'up' ? currentDbVolume + 0.5 : currentDbVolume - 0.5;
+    const newApiVolume = dbToApi(newDbVolume);
     
     const response = await fetch('/api/set_volume', {
         method: 'POST',
-        body: JSON.stringify({new_volume: newVolume}),
+        body: JSON.stringify({new_volume: newApiVolume}),
         headers: {'Content-Type': 'application/json'}
     });
     
     const data = await response.json();
     if (data.status === "Success") {
-        updateOSDVolume(newVolume);
+        const dbVolume = apiToDb(newVolume);
+        updateOSDVolume(dbVolume);
     }
 }
 async function togglePower(state) {
