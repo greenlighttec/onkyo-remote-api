@@ -80,7 +80,7 @@ def set_volume():
         return jsonify({"status": "Failure", "message": str(e)}), 500
 
 @app.route('/api/toggle_mute', methods=['POST'])
-def set_volume():
+def toggle_mute():
     session_id = request.cookies.get('session_id')
     receiver = receivers.get(session_id)
     
