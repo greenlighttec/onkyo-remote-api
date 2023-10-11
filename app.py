@@ -45,7 +45,12 @@ def connect_receiver():
         if status != None:
             receivers[session_id] = receiver
             current_volume = receiver.command('master-volume', arguments=['query'], zone='main')[1]
-            resp = make_response(jsonify({"status": "Connected", "current_volume": current_volume}))
+            current_src = receiver.command('source', arguments=['query'], zone='main')[1]
+            current_state = receiver.command('power', arguments=['query'], zone='main')[1]
+            audio_info = receiver.command('audio-information', arguments=['query'], zone='main')[1]
+            video_info = receiver.command('video-information', arguments=['query'], zone='main')[1]
+            listening_mode = receiver.command('listening_mode', arguments=['query'], zone='main')[1]
+            resp = make_response(jsonify({"status": "Connected","listening_mode": listening_mode, "audio_information": audio_info, "current_state": current_state,"current_volume": current_volume, "current_src": current_src}))
             resp.set_cookie('session_id', session_id)
             return resp
         else:
@@ -74,6 +79,21 @@ def set_volume():
     except Exception as e:
         return jsonify({"status": "Failure", "message": str(e)}), 500
 
+@app.route('/api/toggle_mute', methods=['POST'])
+def set_volume():
+    session_id = request.cookies.get('session_id')
+    receiver = receivers.get(session_id)
+    
+    if receiver is None:
+        return jsonify({"status": "Failure", "message": "Not connected to any receiver"}), 400
+
+    try:
+        # Set the new volume
+        muting = receiver.command('audio-muting', arguments=['toggle'], zone='main')
+        
+        return jsonify({"status": "Success", "mute_status": muting[1]})
+    except Exception as e:
+        return jsonify({"status": "Failure", "message": str(e)}), 500
 
 @app.route('/api/save_settings', methods=['POST'])
 def save_settings_endpoint():
