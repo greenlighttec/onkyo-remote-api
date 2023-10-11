@@ -22,6 +22,13 @@ async function scanReceivers() {
     const manualOption = document.createElement('option');
     select.appendChild(manualOption);
 }
+
+function getCurrentVolumeFromOSD() {
+    const osdText = document.getElementById("osdVolume").innerText;
+    return parseInt(osdText.replace('Volume: ', ''), 10);
+}
+
+
 function toggleManualIP() {
     document.getElementById("manualIPBox").style.display = "block";
 }
@@ -90,6 +97,22 @@ async function saveSettings() {
     const data = await response.json();
     document.getElementById("remoteContainer").style.display = "flex";
     console.log(data);
+}
+
+async function adjustVolume(direction) {
+    let currentVolume = getCurrentVolumeFromOSD();
+    let newVolume = direction === 'up' ? currentVolume + 0.5 : currentVolume - 0.5;
+    
+    const response = await fetch('/api/set_volume', {
+        method: 'POST',
+        body: JSON.stringify({new_volume: newVolume}),
+        headers: {'Content-Type': 'application/json'}
+    });
+    
+    const data = await response.json();
+    if (data.status === "Success") {
+        updateOSDVolume(newVolume);
+    }
 }
 
 
