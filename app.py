@@ -54,17 +54,49 @@ def connect_receiver():
     except Exception as e:
         return jsonify({"status": f"Failed to connect: {str(e)}"}), 500
 
-
-@app.route('/api/command', methods=['POST'])
-def send_command():
-    ip = request.json.get('ip', '')
-    command = request.json.get('command', '')
-    if ip in receivers:
+@app.route('/api/connect', methods=['POST'])
+def connect_receiver():
+    ip = request.json.get('ip')
+    session_id = request.cookies.get('session_id')
+    
+    if session_id is None:
+        session_id = str(uuid.uuid4())
+    
+    try:
         receiver = eiscp.eISCP(ip)
-        receiver.raw(command)
-        return jsonify({"status": "Command sent", "command": command})
-    else:
-        return jsonify({"status": "Receiver not found"}), 404
+        status = receiver.get()
+        if status != None:
+            receivers[session_id] = receiver
+            current_volume = receiver.command('master-volume', arguments=['query'], zone='main')[1]
+            resp = make_response(jsonify({"status": "Connected", "current_volume": current_volume}))
+            resp.set_cookie('session_id', session_id)
+            return resp
+        else:
+            return jsonify({"status": f"Failed to connect: {str(e)}"}), 502
+    except Exception as e:
+        return jsonify({"status": f"Failed to connect: {str(e)}"}), 500
+
+@app.route('/api/set_volume', methods=['POST'])
+def set_volume():
+    session_id = request.cookies.get('session_id')
+    receiver = receivers.get(session_id)
+    
+    if receiver is None:
+        return jsonify({"status": "Failure", "message": "Not connected to any receiver"}), 400
+
+    try:
+        data = request.json
+        new_volume = data.get('new_volume')
+        if new_volume is None:
+            return jsonify({"status": "Failure", "message": "No volume specified"}), 400
+
+        # Set the new volume
+        receiver.command('master-volume', arguments=[new_volume], zone='main')
+        
+        return jsonify({"status": "Success", "new_volume": new_volume})
+    except Exception as e:
+        return jsonify({"status": "Failure", "message": str(e)}), 500
+
 
 @app.route('/api/save_settings', methods=['POST'])
 def save_settings_endpoint():
@@ -81,7 +113,6 @@ def save_manual_ip_route():
     settings['manual_ips'].append(manual_ip)
     save_settings(settings)
     return jsonify({"status": "Manual IP saved"})
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
