@@ -19,14 +19,6 @@
         <button onclick="toggleManualIP()" id="toggleIPButton">Enter IP Manually</button>
         <button onclick="connectReceiver()" id="connectButton">Connect</button>
     </div>
-    <div id="manualIPBox" class="lightbox">
-        <div class="lightbox-content">
-            <span class="close" onclick="closeManualIPBox()">&times;</span>
-            <input type="text" id="lightboxManualIP" placeholder="Enter IP">
-            <button onclick="saveManualIP()">Save</button>
-        </div>
-    </div>
-
     <div class="container" id="remoteContainer" style="display: none;">
         <div class="remote-section">
                 <div class="remote-control">
@@ -62,6 +54,13 @@
                 <span class="osd-label">Source:</span>
                 <span id="osdSource" class="osd-value"></span>
             </div>
+        </div>
+    </div>
+            <div id="manualIPBox" class="lightbox">
+        <div class="lightbox-content">
+            <span class="close" onclick="closeManualIPBox()">&times;</span>
+            <input type="text" id="lightboxManualIP" placeholder="Enter IP">
+            <button onclick="saveManualIP()">Save</button>
         </div>
     </div>
     </div>
