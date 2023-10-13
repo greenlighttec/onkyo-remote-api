@@ -41,20 +41,16 @@ def connect_receiver():
     
     try:
         receiver = eiscp.eISCP(ip)
-        status = receiver.get()
-        if status != None:
-            receivers[session_id] = receiver
-            current_volume = receiver.command('master-volume', arguments=['query'], zone='main')[1]
-            current_src = receiver.command('source', arguments=['query'], zone='main')[1]
-            current_state = receiver.command('power', arguments=['query'], zone='main')[1]
-            audio_info = receiver.command('audio-information', arguments=['query'], zone='main')[1]
-            video_info = receiver.command('video-information', arguments=['query'], zone='main')[1]
-            # listening_mode = receiver.command('listening_mode', arguments=['query'], zone='main')[1]
-            resp = make_response(jsonify({"status": "Connected", "audio_information": audio_info, "current_state": current_state,"current_volume": current_volume, "current_src": current_src}))
-            resp.set_cookie('session_id', session_id)
-            return resp
-        else:
-            return jsonify({"status": f"Failed to connect: {str(e)}"}), 502
+        receivers[session_id] = receiver
+        current_volume = receiver.command('master-volume', arguments=['query'], zone='main')[1]
+        current_src = receiver.command('source', arguments=['query'], zone='main')[1]
+        current_state = receiver.command('power', arguments=['query'], zone='main')[1]
+        audio_info = receiver.command('audio-information', arguments=['query'], zone='main')[1]
+        video_info = receiver.command('video-information', arguments=['query'], zone='main')[1]
+        # listening_mode = receiver.command('listening_mode', arguments=['query'], zone='main')[1]
+        resp = make_response(jsonify({"status": "Connected", "audio_information": audio_info, "current_state": current_state,"current_volume": current_volume, "current_src": current_src}))
+        resp.set_cookie('session_id', session_id)
+        return resp
     except Exception as e:
         return jsonify({"status": f"Failed to connect: {str(e)}"}), 500
 
