@@ -10,13 +10,28 @@ body {
     justify-content: space-around;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(45deg, #6e8efb, #a777e3);
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
 }
 
 .remote-section {
     flex: 1;
     /* Add your remote styling here */
 }
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
 
 .osd-container {
     flex: 2;
