@@ -27,7 +27,7 @@ async function scanReceivers() {
 
 function getCurrentVolumeFromOSD() {
     const osdText = document.getElementById("osdVolume").innerText;
-    return parseFloat(osdText.replace('Volume: ', ''), 10);
+    return parseFloat(osdText, 10);
 }
 
 function apiToDb(apiVolume) {
@@ -55,7 +55,7 @@ function closeManualIPBox() {
 }
 
 function updateOSDVolume(newVolume) {
-    document.getElementById("osdVolume").innerText = `Volume: ${newVolume}`;
+    document.getElementById("osdVolume").innerText = `${newVolume}`;
 }
 
 async function saveManualIP() {
