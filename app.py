@@ -91,7 +91,7 @@ def toggle_mute():
         return jsonify({"status": "Failure", "message": str(e)}), 500
 
 @app.route('/api/change_power', methods=['POST'])
-def toggle_mute():
+def toggle_power():
     session_id = request.cookies.get('session_id')
     receiver = receivers.get(session_id)
     
