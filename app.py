@@ -82,12 +82,28 @@ def toggle_mute():
     
     if receiver is None:
         return jsonify({"status": "Failure", "message": "Not connected to any receiver"}), 400
-
+        
     try:
         # Set the new volume
         muting = receiver.command('audio-muting', arguments=['toggle'], zone='main')
-        
         return jsonify({"status": "Success", "mute_status": muting[1]})
+    except Exception as e:
+        return jsonify({"status": "Failure", "message": str(e)}), 500
+
+@app.route('/api/change_power', methods=['POST'])
+def toggle_mute():
+    session_id = request.cookies.get('session_id')
+    receiver = receivers.get(session_id)
+    
+    if receiver is None:
+        return jsonify({"status": "Failure", "message": "Not connected to any receiver"}), 400
+        
+    try:
+        data = request.json
+        newPowerState = data.get('state')
+        # Set the new volume
+        state = receiver.command('power', arguments=[str(newPowerState)], zone='main')
+        return jsonify({"status": "Success", "power_state": state[1]})
     except Exception as e:
         return jsonify({"status": "Failure", "message": str(e)}), 500
 
